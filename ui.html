@@ -1,0 +1,38 @@
+<!-- Load the basic CSS from Figma to get a native look -->
+<link rel="stylesheet" href="https://static.figma.com/api/figma-extension-api-0.0.1.css">
+<!-- Add some styles to make it look nicer -->
+<style>
+  label {
+    display: block;
+    margin-bottom: 20px;
+  }
+</style>
+
+<!-- The form with two inputs and a submit button -->
+<form id="form">
+  <label>
+    Inner radius
+    <input type="range" min="10" max="300" value="100" id="inner">
+  </label>
+  <label>
+    Outer radius
+    <input type="range" min="10" max="350" value="300" id="outer">
+  </label>
+  <button>Generate the star</button>
+</form>
+
+<script>
+  // Detect submit event on the form
+  document.querySelector('#form').addEventListener('submit', (e) => {
+    // Prevent the form to actually being submitted
+    e.preventDefault();
+    // Send a message to the plugin
+    parent.postMessage({
+      // Include the inner & outer radii values as integers
+      pluginMessage: {
+        inner: parseInt(document.querySelector('#inner').value),
+        outer: parseInt(document.querySelector('#outer').value)
+      }
+    }, '*');
+  });
+</script>
